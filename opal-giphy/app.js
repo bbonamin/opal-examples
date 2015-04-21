@@ -15444,7 +15444,7 @@ if (obj == null) obj = nil;
   Opal.dynamic_require_severity = "error";
   var $a, $b, TMP_3, self = Opal.top, $scope = Opal, nil = Opal.nil, $breaker = Opal.breaker, $slice = Opal.slice, $klass = Opal.klass;
 
-  Opal.add_stubs(['$require', '$attr_reader', '$gsub', '$get', '$each', '$[]', '$html_tag', '$new', '$append', '$images', '$first', '$shuffle', '$fetch', '$json', '$find', '$ready?', '$on', '$attr', '$nil?', '$alert', '$search', '$html']);
+  Opal.add_stubs(['$require', '$attr_reader', '$new', '$[]', '$gsub', '$get', '$each', '$html_tag', '$from_json', '$append', '$images', '$first', '$shuffle', '$fetch', '$json', '$find', '$ready?', '$on', '$attr', '$nil?', '$alert', '$search', '$html']);
   self.$require("opal");
   self.$require("opal-jquery");
   self.$require("pp");
@@ -15455,6 +15455,12 @@ if (obj == null) obj = nil;
     var def = self.$$proto, $scope = self.$$scope;
 
     self.$attr_reader("html_tag");
+
+    Opal.defs(self, '$from_json', function(json) {
+      var self = this;
+
+      return self.$new(json['$[]']("images")['$[]']("downsized")['$[]']("url"));
+    });
 
     return (def.$initialize = function(url) {
       var self = this;
@@ -15473,14 +15479,6 @@ if (obj == null) obj = nil;
 
     Opal.cdecl($scope, 'HOST', "http://api.giphy.com/v1/gifs");
 
-    self.$attr_reader("giphys");
-
-    def.$initialize = function() {
-      var self = this;
-
-      return self.giphys = [];
-    };
-
     def.$search = function(query) {
       var $a, $b, TMP_1, self = this, escaped_query = nil, url = nil;
 
@@ -15488,10 +15486,9 @@ if (obj == null) obj = nil;
       url = "" + ($scope.get('HOST')) + "/search?q=" + (escaped_query) + "&api_key=" + ($scope.get('API_KEY'));
       return ($a = ($b = $scope.get('HTTP')).$get, $a.$$p = (TMP_1 = function(resp){var self = TMP_1.$$s || this, $a, $b, TMP_2;
 if (resp == null) resp = nil;
-      return ($a = ($b = resp.$json().$fetch("data").$shuffle().$first(10)).$each, $a.$$p = (TMP_2 = function(item){var self = TMP_2.$$s || this, giphy_url = nil, image = nil;
-if (item == null) item = nil;
-        giphy_url = item['$[]']("images")['$[]']("downsized")['$[]']("url");
-          image = $scope.get('GiphyImage').$new(giphy_url).$html_tag();
+      return ($a = ($b = resp.$json().$fetch("data").$shuffle().$first(10)).$each, $a.$$p = (TMP_2 = function(json){var self = TMP_2.$$s || this, image = nil;
+if (json == null) json = nil;
+        image = $scope.get('GiphyImage').$from_json(json).$html_tag();
           return self.$images().$append(image);}, TMP_2.$$s = self, TMP_2), $a).call($b)}, TMP_1.$$s = self, TMP_1), $a).call($b, url);
     };
 
@@ -15512,7 +15509,7 @@ if (item == null) item = nil;
         } else {
         return giphy_api.$search(query)
       };}, TMP_4.$$s = self, TMP_4), $a).call($b, "click");
-    return ($a = ($c = $scope.get('Element').$find("#startOver")).$on, $a.$$p = (TMP_5 = function(){var self = TMP_5.$$s || this;
+    return ($a = ($c = $scope.get('Element').$find("#startOverButton")).$on, $a.$$p = (TMP_5 = function(){var self = TMP_5.$$s || this;
 
     return $scope.get('Element').$find("#images").$html("")}, TMP_5.$$s = self, TMP_5), $a).call($c, "click");}, TMP_3.$$s = self, TMP_3), $a).call($b);
 })(Opal);
