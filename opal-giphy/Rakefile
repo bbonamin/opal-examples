@@ -1,0 +1,14 @@
+require 'bundler'
+Bundler.require
+
+require 'opal'
+require 'opal-jquery'
+
+desc 'Build our app to app.js'
+task :build do
+  Opal.append_path 'app'
+
+  File.open('app.js', 'w+') do |out|
+    out << Opal::Builder.build('app.rb')
+  end
+end
